@@ -1,0 +1,1 @@
+[![Daily Update by 22f1001401@ds.study.iitm.ac.in](https://github.com/22f1001401/tds-w3-q4/actions/workflows/daily-update.yml/badge.svg)](https://github.com/22f1001401/tds-w3-q4/actions/workflows/daily-update.yml)
