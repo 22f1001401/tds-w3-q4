@@ -2,8 +2,8 @@ name: Daily Update by 22f1001401@ds.study.iitm.ac.in
 
 on:
   schedule:
-    - cron: '30 2 * * *'  # Runs daily at 2:30 AM UTC
-  workflow_dispatch:  # Allows manual testing
+    - cron: '30 2 * * *'
+  workflow_dispatch:
 
 jobs:
   update:
@@ -13,15 +13,17 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0  # Full history
 
       - name: Create daily timestamp by 22f1001401@ds.study.iitm.ac.in
         run: |
-          echo "Last updated: $(date -u)" > UPDATE_LOG.txt
+          echo "Last updated: $(date -u) UTC" > UPDATE_LOG.txt
+          cat UPDATE_LOG.txt  # Debug: show file content
 
       - name: Commit and push changes
         run: |
           git config user.name "Daily Bot"
           git config user.email "22f1001401@ds.study.iitm.ac.in"
           git add UPDATE_LOG.txt
-          git commit -m "Daily automated update: $(date -u)"
-          git push
+          git commit -m "Daily automated update: $(date -u)" || echo "No changes to commit"
+          git push origin HEAD:${{ github.ref_name }}
